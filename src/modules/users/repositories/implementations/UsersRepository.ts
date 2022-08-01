@@ -50,6 +50,6 @@ class UsersRepository implements IUsersRepository {
 
   list(): User[] {
     return this.users;
+  }
 }
-
 export { UsersRepository };
