@@ -10,15 +10,12 @@ class TurnUserAdminUseCase {
 
   execute({ user_id }: IRequest): User {
     const user = this.usersRepository.findById(user_id);
-
+        
     if(!user){
       throw new Error("User not found.");
     }
 
-    user.admin = true;
-    user.updated_at = new Date();
-
-    return user;
+    return this.usersRepository.turnAdmin(user);
   }
 }
 
