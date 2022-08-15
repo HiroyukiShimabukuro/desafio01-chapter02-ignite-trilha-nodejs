@@ -2,18 +2,18 @@
     "openapi": "3.0.0",
     "info":{
         "title": "Challenge 01 - Chapter 02 - Trilha Node JS",
-        "description": "This is an API Rent",
+        "description": "This is an API User CRUD",
         "version": "1.0.0",
         "contact":{
             "email": "workdevhiro@gmail.com"
         }
     },
     "paths":{
-        "/categories":{
+        "/users":{
             "post": {
-                "tags": ["Category"],
-                "summary": "Create a category",
-                "description": "Create a new category",
+                "tags": ["User"],
+                "summary": "Create a user",
+                "description": "Create a new user",
                 "requestBody": {
                     "content": {
                         "application/json":{
@@ -23,13 +23,13 @@
                                     "name": {
                                         "type": "string"
                                     },
-                                    "description": {
+                                    "email": {
                                         "type": "string"
                                     }
                                 },
                                 "example": {
-                                    "name": "Category name sample",
-                                    "description": "Category description sample"
+                                    "name": "User name sample",
+                                    "email": "email@sample.com"
                                 }
                             }
                         }
@@ -39,16 +39,21 @@
                     "201": {
                         "description": "Created"
                     },
-                    "500":{
-                        "description": "Category already exists"
+                    "400":{
+                        "description": "User already exists"
                     }
                 }
 
             },
             "get":{
-                "tags": ["Category"],
-                "summary": "List all categories",
-                "description": "List all categories",
+                "tags": ["User"],
+                "summary": "List all users",
+                "description": "List all users if you are a admin",
+                "requestBody": {
+                    "name": "user_id",
+                    "in": "header",
+                    "required": true
+                },
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -59,17 +64,35 @@
                                     "items": {
                                         "type": "object",
                                         "properties": {
-                                            "name":{
+                                            "id": {
                                                 "type": "string"
                                             },
-                                            "description": {
+                                            "name": {
                                                 "type": "string"
+                                            },
+                                            "admin": {
+                                                "type": "boolean"
+                                            },
+                                            "email": {
+                                                "type": "string"
+                                            },
+                                            "created_at": {
+                                                "type": "Date"
+                                            },
+                                            "updated_at": {
+                                                "type": "Date"
                                             }
                                         }
                                     }
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "User not exists."
+                    },
+                    "403": {
+                        "description": "User not authorized."
                     }
                 }
             }
