@@ -37,7 +37,42 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "Created",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "admin": {
+                                            "type": "boolean"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "type": "string"
+                                        },
+                                        "updated_at": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "id": "UUID generated",
+                                        "name": "User name sample",
+                                        "admin": false,
+                                        "email": "email@sample.com",
+                                        "created_at": "2022-08-16",
+                                        "updated_at": "2022-08-16"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400":{
                         "description": "User already exists"
@@ -49,11 +84,11 @@
                 "tags": ["User"],
                 "summary": "List all users",
                 "description": "List all users if you are a admin",
-                "requestBody": {
+                "parameters": [{
                     "name": "user_id",
                     "in": "header",
                     "required": true
-                },
+                }],
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -77,24 +112,139 @@
                                                 "type": "string"
                                             },
                                             "created_at": {
-                                                "type": "Date"
+                                                "type": "string"
                                             },
                                             "updated_at": {
-                                                "type": "Date"
+                                                "type": "string"
                                             }
                                         }
+                                    },
+                                    "example": {
+                                        "id": "UUID generated",
+                                        "name": "User name sample",
+                                        "admin": false,
+                                        "email": "email@sample.com",
+                                        "created_at": "2022-08-16",
+                                        "updated_at": "2022-08-16"
                                     }
                                 }
                             }
                         }
                     },
                     "400": {
-                        "description": "User not exists."
-                    },
-                    "403": {
-                        "description": "User not authorized."
+                        "description": "User not authorized or User not found"
                     }
                 }
+            }
+        },
+        "/users/:user_id" : {
+            "get" : {
+                "tags" : ["User"],
+                "summary": "Show user profile",
+                "description" : "Show profile data of specific user",
+                "parameters" : [{
+                    "name": "user_id",
+                    "in": "params",
+                    "required": true
+                }],
+                "responses" : {
+                    "200" : {
+                        "description": "Success",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "admin": {
+                                            "type": "boolean"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "type": "string"
+                                        },
+                                        "updated_at": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "id": "UUID generated",
+                                        "name": "User name sample",
+                                        "admin": false,
+                                        "email": "email@sample.com",
+                                        "created_at": "2022-08-16",
+                                        "updated_at": "2022-08-17"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404" : {
+                        "description" : "User not found"
+                    }
+                } 
+            }
+        },
+        "users/:user_id/admin": {
+            "patch" : {
+                "tags" : ["User"], 
+                "summary": "Turn admin",
+                "description" : "Turn received user into admin",
+                "parameters" : [{
+                    "name": "user_id",
+                    "in": "params",
+                    "required": true
+                }],
+                "responses" : {
+                    "200" : {
+                        "description": "Success",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "admin": {
+                                            "type": "boolean"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "type": "Date"
+                                        },
+                                        "updated_at": {
+                                            "type": "Date"
+                                        }
+                                    },
+                                    "example": {
+                                        "id": "UUID generated",
+                                        "name": "User name sample",
+                                        "admin": true,
+                                        "email": "email@sample.com",
+                                        "created_at": "2022-08-16",
+                                        "updated_at": "2022-08-16"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404" : {
+                        "description": "User not found"
+                    }
+                } 
             }
         }
     }
